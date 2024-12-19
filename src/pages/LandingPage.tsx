@@ -61,7 +61,7 @@
 // }
 
 import { Link } from 'react-router-dom';
-import video from '../assests/Untitled video - Made with Clipchamp (15).mp4'
+import video from '../assests/Updated_crackit_ai_intro.mp4'
 
 export default function Dashboard() {
   return (
