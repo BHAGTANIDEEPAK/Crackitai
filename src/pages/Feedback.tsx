@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Feedback() {
   const location = useLocation();
@@ -8,6 +9,31 @@ export default function Feedback() {
   let feedback = location.state?.feedback || 'No feedback available';
   feedback = feedback.replaceAll('*', ''); // Clean up feedback
   console.log(feedback);
+  localStorage.setItem("Feedback",feedback);
+
+  let Experience: any = localStorage.getItem("Experience")
+
+  const InterviewData = {
+    Email: localStorage.getItem("Email"),
+    Position: localStorage.getItem("Position"),
+    Techstack: localStorage.getItem("TechStack"),
+    Experience: parseInt(Experience,10),
+    Feedback: localStorage.getItem("Feedback")
+  }
+
+  useEffect(() => {
+    // Make the API call once when the component mounts
+    const postInterviewData = async () => {
+      try {
+        const response = await axios.post('http://localhost:9090/addInterview', InterviewData);
+        console.log(response.data); // Log the response
+      } catch (error) {
+        console.error("Error while saving interview data:", error);
+      }
+    };
+
+    postInterviewData();
+  }, []); // Empty dependency array ensures the effect runs only once
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-orange-200 via-pink-100 to-white">

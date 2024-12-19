@@ -13,7 +13,7 @@ export const signUpUser = async (email: string, password: string) => {
 
 // Log in user
 export const logInUser = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password }); 
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   const user = data?.user;  // Access the user from data
   return { user, error };
 };
@@ -22,4 +22,28 @@ export const logInUser = async (email: string, password: string) => {
 export const logOutUser = async () => {
   const { error } = await supabase.auth.signOut();
   return { error };
+};
+
+export const googleSignIn = async ({ redirectTo }: { redirectTo: string }) => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo, // This will be passed to Supabase for redirection after login
+    },
+  });
+  if (error) {
+    return { error };
+  }
+  
+
+  // Check if the 'data' contains 'user' or 'url'
+  if ('user' in data) {
+    return { data: { user: data.user }, error: null };
+  }
+
+  if ('url' in data) {
+    return { data: { url: data.url }, error: null };
+  }
+
+  return { error: new Error('Unexpected result from Google sign-in.') };
 };

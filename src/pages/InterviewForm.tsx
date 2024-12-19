@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 export default function InterviewForm() {
+  const location = useLocation();
   const [position, setPosition] = useState('');
   const [techStack, setTechStack] = useState('');
   const [experience, setExperience] = useState('');
@@ -10,12 +11,27 @@ export default function InterviewForm() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const API_KEY = 'AIzaSyA2lxPX0CyzqoLlISol6Z9zdbJUv5fs31I'; // Replace with your actual API key
+  const API_KEY = 'AIzaSyArCsuoDULBCWau8gxDThxwVFWk_CtH29M'; // Replace with your actual API key
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    console.log(location.state.email);
+
+
+    const InterviewData = {
+      Email: location.state.email,
+      Position: position,
+      Techstack: techStack,
+      Experience: parseInt(experience,10)
+    }
+    localStorage.setItem("Email",location.state.email);
+    localStorage.setItem("Position",position);
+    localStorage.setItem("TechStack",techStack);
+    localStorage.setItem("Experience",experience);
+    
+
 
     try {
       // Prepare the request payload
@@ -42,6 +58,10 @@ export default function InterviewForm() {
         }
       );
       console.log(response);
+
+      // //API CALL TO SAVE THE INTERVIEW INFO
+      // const response2 = await axios.post('http://localhost:9090/addInterview',InterviewData)
+      // console.log(response2);
 
       // Access the generated questions from the response
       const questions = response.data.candidates[0].content.parts[0].text;

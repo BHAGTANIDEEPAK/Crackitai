@@ -700,7 +700,7 @@ export default function InterviewQuestions() {
 
     try {
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyA2lxPX0CyzqoLlISol6Z9zdbJUv5fs31I`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyArCsuoDULBCWau8gxDThxwVFWk_CtH29M`,
         requestBody,
         {
           headers: {
