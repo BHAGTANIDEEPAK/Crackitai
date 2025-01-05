@@ -11,7 +11,7 @@ export default function InterviewForm() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const API_KEY = 'AIzaSyArCsuoDULBCWau8gxDThxwVFWk_CtH29M'; // Replace with your actual API key
+  const API_KEY = 'AIzaSyBCKssDDLl8KMXqmdhtKTSXUFe7tkmgrLE'; // Replace with your actual API key
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
